@@ -1,7 +1,6 @@
 
 use rand::prelude::*;
 use std::io::Result;
-use std::net::SocketAddr;
 use tokio::net::TcpStream;
 use tokio::io::{self, AsyncReadExt, AsyncWriteExt, ReadHalf, WriteHalf};
 
@@ -16,7 +15,7 @@ pub async fn main() -> Result<()> {
     let (rd, wr) = io::split(tcp_stream);
         
     let read_handler = tokio::spawn(async move {
-        match handle_read(rd, &peer_addr).await {
+        match handle_read(rd).await {
             Ok(()) => println!("Remote {} read hung up gracefully", peer_addr),
             Err(e) => println!("Remote {} read hung up with error {}", peer_addr, e),
         };
@@ -33,7 +32,7 @@ pub async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn handle_read(mut read_socket: ReadHalf<TcpStream>, remote_addr: &SocketAddr) -> Result<()> {
+async fn handle_read(mut read_socket: ReadHalf<TcpStream>) -> Result<()> {
     let mut buf = vec![0; 4096];
 
     loop {
@@ -42,8 +41,6 @@ async fn handle_read(mut read_socket: ReadHalf<TcpStream>, remote_addr: &SocketA
         if bytes_read == 0 {
             return Ok(());
         }
-
-        println!("Read {} bytes from {}", bytes_read, remote_addr);
     }
 }
 
