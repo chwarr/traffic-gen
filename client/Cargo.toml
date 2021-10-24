@@ -8,5 +8,4 @@ edition = "2018"
 [dependencies]
 chrono = "0.4.19"
 handlers = { path = "../handlers" }
-rand = "0.8.4"
 tokio = { version = "1", features = ["full"] }
