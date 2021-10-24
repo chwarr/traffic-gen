@@ -3,7 +3,7 @@
 Super simple pair of programs that read/write random 4K buffers over TCP.
 
 I needed to put some load on a network link during the summer of 2021.
-Instead of using something like `nc`, I decided to take use this as an
+Instead of using something like `nc`, I decided to use this as an
 opportunity to explore how to use [Rust](https://www.rust-lang.org/) and
 [Tokio](https://tokio.rs/) to do socket I/O.
 
